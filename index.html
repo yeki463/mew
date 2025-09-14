@@ -32,19 +32,65 @@
             background-color: transparent;
             margin: 0 10px;
         }
-        .circle.yellow {
-            border-color: yellow;
+        .circle.red {
+            border-color: red;
         }
-        .circle.green {
-            border-color: green;
+        .circle.white {
+            border-color: white;
         }
-        .s { color: blue; }
-        .b { color: purple; }
-        .a { color: red; }
-        .y { color: orange; }
+        .s { color: #4DA0D8; }
+        .b { color: #853EED; }
+        .a { color: #DB2F66; }
+        .y { color: #EC784D; }
         #mainText {
             font-size: 1.4em;
             margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 6px black;
+        }
+        #mainText img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130%;
+            height: auto;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .cornerImage {
+            position: absolute;
+            max-width: 25vw;
+            height: auto;
+            opacity: 1;
+        }
+        /* Левый верхний угол */
+        #cornerImage1 {
+            top: 10px;
+            left: 10px;
+            min-width: 150px;
+        }
+        /* Правый нижний угол */
+        #cornerImage2 {
+            bottom: 10px;
+            right: 10px;
+            min-width: 10px;
+        }
+        /* Левый нижний угол */
+        #cornerImage3 {
+            bottom: 10px;
+            left: 10px;
+        }
+        /* Правый верхний угол */
+        #cornerImage4 {
+            top: 10px;
+            right: 10px;
+        }
+        /* Новое изображение — чуть правее cornerImage3 */
+        #cornerImage5 {
+            bottom: 10px;
+            left: 100px;
         }
         #countdown {
             font-size: 1.05em;
@@ -68,36 +114,34 @@
             display: none;
             margin-top: 10px;
         }
-        #morseText {
-            margin-top: 20px;
-            font-size: 0.8em;
-            color: red;
-            font-family: monospace;
-            white-space: pre-wrap;
-        }
     </style>
 </head>
 <body>
     <div class="circle-container">
-        <div class="circle yellow"></div>
-        <div class="circle green"></div>
-        <div class="circle yellow"></div>
-        <div class="circle green"></div>
+        <div class="circle red"></div>
+        <div class="circle red"></div>
+        <div class="circle white"></div>
+        <div class="circle white"></div>
     </div>
     <div id="mainText">
+        <img src="https://i.ibb.co.com/JFGzN69d/IMG-0073.png" alt="IMG-0073">
         <span class="s">S</span>
         <span class="b">B</span>
         <span class="a">A</span>
         <span class="y">Y</span>
         <br>15.09.2026
     </div>
+
+    <img id="cornerImage1" class="cornerImage" src="https://i.ibb.co.com/F45rMJGc/IMG-0419.png" alt="IMG-0419">
+    <img id="cornerImage2" class="cornerImage" src="https://i.ibb.co.com/dwJfpbdM/IMG-0418.png" alt="IMG-0418">
+    <img id="cornerImage3" class="cornerImage" src="https://i.ibb.co.com/dwKm6MHd/IMG-0424.png" alt="IMG-0424">
+    <img id="cornerImage4" class="cornerImage" src="https://i.ibb.co.com/VWxFFZKJ/IMG-0425.png" alt="IMG-0425">
+    <img id="cornerImage5" class="cornerImage" src="https://i.ibb.co.com/jkrNsbnV/IMG-0430.png" alt="IMG-0430" border="0">
+
     <div id="countdown"></div>
     <div id="twoYearsLeft">2 years left</div>
     <div id="yearLeft">1 year left</div>
     <div id="cornerText">ablgzw ykwndr</div>
-    <div id="morseText">
-        .... - - .--. ... ---... -..-. -..-. -.-- . -.- .. ....- -.... ...-- .-.-.- --. .. - .... ..- -... .-.-.- .. --- -..-. -.. .. -.- . -. -... .- ..- ... -..-.
-    </div>
 
     <script>
         const targetDate = new Date('2026-09-15T00:00:00').getTime();
@@ -113,20 +157,20 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById('countdown').innerHTML = 
+            document.getElementById('countdown').textContent =
                 days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
 
-            if (now >= twoYearsBefore && now < twoYearsBefore + 1000 * 60 * 60 * 24) {
+            if (now >= twoYearsBefore && now < oneYearBefore) {
                 document.getElementById('twoYearsLeft').style.display = 'block';
             }
 
-            if (now >= oneYearBefore && now < oneYearBefore + 1000 * 60 * 60 * 24) {
+            if (now >= oneYearBefore && now < targetDate) {
                 document.getElementById('yearLeft').style.display = 'block';
             }
 
             if (distance < 0) {
                 clearInterval(countdown);
-                document.getElementById('countdown').innerHTML = 'the party must begin';
+                document.getElementById('countdown').textContent = 'the party must begin';
             }
         }, 1000);
     </script>
